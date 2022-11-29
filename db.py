@@ -15,7 +15,6 @@ class BotDB:
 	def get_user_id(self, user_id):
 		"""Получаем id юзера в базе по его user_id в телеграмме"""
 		result = self.cursor.execute("SELECT id FROM users WHERE user_id = ?", (user_id,))
-		#print(result.fetchall()[1])
 		return result.fetchone()[0]
 
 	def add_user(self, user_id):
@@ -33,7 +32,6 @@ class BotDB:
 		"""Получаем историю операций за определеный период"""
 
 		if(within == 'day'):
-			#за последний день
 			result = self.cursor.execute(f"""SELECT * FROM record WHERE user_id = {self.get_user_id(user_id)}
 											AND date BETWEEN datetime('now', 'start of day') 
 											AND datetime('now', 'localtime') ORDER BY date""")
@@ -51,7 +49,6 @@ class BotDB:
 											 ORDER BY date""")
 
 		else:
-			#За все время
 			result = self.cursor.execute(f"SELECT * FROM record WHERE user_id = {self.get_user_id(user_id)} ORDER BY date")
 
 		return result.fetchall()
